@@ -1,10 +1,9 @@
 package com.join.tools.pdf;
 
 import com.itextpdf.text.DocumentException;
-import com.join.tools.pdf.core.FreemarkerEngine;
-import com.join.tools.pdf.core.PdfEngine;
-import com.join.tools.pdf.demo.Course;
-import com.join.tools.pdf.demo.Student;
+import com.join.tools.pdf.core.TemplatePdfEngine;
+import com.join.tools.pdf.model.Course;
+import com.join.tools.pdf.model.Student;
 import com.join.tools.pdf.utils.CommonUtils;
 import freemarker.template.TemplateException;
 import org.junit.Test;
@@ -12,14 +11,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,14 +35,17 @@ public class FreemarkerEngineTest{
     @Test
     public void test() throws IOException, TemplateException, DocumentException {
         String dir= CommonUtils.getRealPath("templates");
-        PdfEngine engine=new PdfEngine(dir);
+        TemplatePdfEngine engine=new TemplatePdfEngine(dir);
         List<Course> sourceList=new ArrayList<Course>();
 
         sourceList.add(new Course("English", (float) 98.9));
         sourceList.add(new Course("数学", (float) 99));
-        Student student=new Student("张三",18, sourceList);
-        FileOutputStream fileOutputStream=new FileOutputStream(new File( "D:/test.pdf"));
-        engine.processPdf("test.html",student,fileOutputStream);
+        Student student=new Student("张三",18,new Date(), BigDecimal.valueOf(20.5555), sourceList);
+        File pdfFile=new File( "D:\\Code\\pdf-tools\\src\\main\\resources\\test.pdf");
+        //pdfFile.delete();
+        //pdfFile.createNewFile();
+        FileOutputStream fileOutputStream=new FileOutputStream(pdfFile);
+        engine.processPdf("test.ftl",student,fileOutputStream);
     }
 
 }

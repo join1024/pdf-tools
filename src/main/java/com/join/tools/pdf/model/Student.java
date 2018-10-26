@@ -1,5 +1,7 @@
-package com.join.tools.pdf.demo;
+package com.join.tools.pdf.model;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,7 +13,20 @@ public class Student {
 
     private Integer age;
 
+    private Date birthday;
+
+    private BigDecimal amount;
+
     private List<Course> courseList;
+
+    public Student(String name, Integer age, Date birthday, BigDecimal amount,
+        List<Course> courseList) {
+        this.name = name;
+        this.age = age;
+        this.birthday = birthday;
+        this.amount = amount;
+        this.courseList = courseList;
+    }
 
     public Student(String name, Integer age, List<Course> courseList) {
         this.name = name;
@@ -33,6 +48,22 @@ public class Student {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public List<Course> getCourseList() {
